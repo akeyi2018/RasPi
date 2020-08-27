@@ -1,0 +1,12 @@
+{% extends "application.html" %}
+
+{% for message in get_flashed_messages() %}
+<div class=flash>{{ message }}</div> 
+{% endfor %}
+{% block body %}
+{% if session.user_id %}
+<a href="{{ url_for('logout') }}">logout</a>
+{% endif %}
+<h3>Cartain</h3>
+<h5>cartain page</h5>
+{% endblock %}  

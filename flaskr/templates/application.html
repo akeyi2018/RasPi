@@ -1,0 +1,20 @@
+<!doctype html>
+<title>RaspberryPi</title>
+<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <h3>RaspberryPi勉強会</h3> 
+  {% for message in get_flashed_messages() %}
+  <div class=flash>{{ message }}</div> 
+  {% endfor %}
+  
+  <br> 
+ 
+    {% block body %}
+    {% endblock %}
+  
+  <br>
+  
+  <h5>(c) copyright 2020- RaspberryPi勉強会</h5>
+
+</div>
