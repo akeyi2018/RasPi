@@ -1,0 +1,20 @@
+
+
+    {% extends "application.html" %}
+     
+    {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+    {% endfor %}
+    {% block body %}
+    {% if session.user_id %}
+    <a href="{{ url_for('logout') }}">logout</a>
+    {% endif %}
+    <h3>Curtain</h3>
+    <h5>curtain page</h5><br><br>
+    <form action="#" method="post">
+        Enter postcode:
+        <input type=number name="postcode1"><input type=number name="postcode2"><br>
+        <input type=submit><br>
+    </form>
+    {% endblock %}
+
