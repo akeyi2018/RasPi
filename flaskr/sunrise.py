@@ -41,6 +41,26 @@ class sun_info:
         except:
             return None
 
+    #jsonファイルより日の出入り時間を計算する（取得）
+    def get_sun_info_from_json(self):
+
+        location = ephem.Observer()
+        res = self.get_latlon_from_json()
+        if res is None:
+            return res
+        #緯度、経度をセット
+        location.lat = res[0]
+        location.lon = res[1]
+        #現在時間UTCをセット
+        location.date = datetime.utcnow()
+   
+        sun = ephem.Sun()
+        #次の日の入りと日の出時間を取得
+        sunrise_time = str(ephem.localtime(location.next_rising(sun)) + self.adjust_time)
+        sunset_time = str(ephem.localtime(location.next_setting(sun)) - self.adjust_time)
+
+        return sunset_time, sunrise_time
+    
     #日の出入り時間を計算する（取得）
     def get_sun_info(self):
 
@@ -60,10 +80,13 @@ class sun_info:
         sunset_time = str(ephem.localtime(location.next_setting(sun)) - self.adjust_time)
 
         return sunset_time, sunrise_time
+    
 
 if __name__ == '__main__':
 
-    suninfo = sun_info('252-0301')
-    print(suninfo.get_sun_info())
-    suninfo.write_latlon_to_json()
+    suninfo = sun_info()
+    print(suninfo.get_sun_info_from_json())
+    
+
+
     
