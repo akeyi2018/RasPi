@@ -7,8 +7,8 @@ import json
 
 class sun_info:
 
-    def __init__(self, code):
-        self.postal_code = code
+    def __init__(self):
+        self.postal_code = '252-0301'
         #日の出入り時間の前後３０分にカーテン開閉を行う
         self.adjust_time = timedelta(minutes=30)
         #緯度経度書き込み用Jsonファイル名
@@ -48,9 +48,10 @@ class sun_info:
         res = self.get_latlon_from_json()
         if res is None:
             return res
+
         #緯度、経度をセット
-        location.lat = res[0]
-        location.lon = res[1]
+        location.lat = res['lat']
+        location.lon = res['lon']
         #現在時間UTCをセット
         location.date = datetime.utcnow()
    
@@ -86,7 +87,3 @@ if __name__ == '__main__':
 
     suninfo = sun_info()
     print(suninfo.get_sun_info_from_json())
-    
-
-
-    
