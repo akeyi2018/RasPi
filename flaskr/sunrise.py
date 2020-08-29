@@ -13,6 +13,7 @@ class sun_info:
         #緯度経度書き込み用Jsonファイル名
         self.location_json_file = 'location.json'
         self.sun_info_json_file = 'suninfo.json'
+        self.status = 'init'
 
     #jsonファイルから緯度経度を取得する
     def get_latlon_from_json(self):
@@ -63,7 +64,8 @@ class sun_info:
         sunrise_time = str(ephem.localtime(location.next_rising(sun)) + self.adjust_time)
         sunset_time = str(ephem.localtime(location.next_setting(sun)) - self.adjust_time)
         #計算結果をjsonファイルに書き込む
-        self.write_sunrise_info_to_json(sunset_time, sunrise_time, 'init')
+        self.write_sunrise_info_to_json(sunset_time, sunrise_time, self.status)
+        return 
     
     #日の出入り時間を計算する（取得）
     def get_sun_info(self):
@@ -83,7 +85,37 @@ class sun_info:
         sunset_time = str(ephem.localtime(location.next_setting(sun)) - self.adjust_time)
 
         return sunset_time, sunrise_time
-    
+
+class Curtain:
+    def __init__(self):
+        self.sun_info_json_file = 'suninfo.json'
+        self.status = ''
+
+    def set_status_to_json_file(self, status):
+        with open(self.sun_info_json_file, 'r') as json_file:
+            json_data = json.load(json_file)
+            json_data['status'] = status
+        
+        with open(self.sun_info_json_file, 'w') as json_file:
+            json_file.write(json.dump(json_data))
+
+    def get_status(self):
+        with open(self.sun_info_json_file, 'r') as json_file:
+            return json.load(json_file)['status']
+
+    def open(self):
+        self.status = 'open'
+        self.set_status_to_json_file(self.status)
+        
+    def close(self):
+        self.status = 'close'
+        self.set_status_to_json_file(self.status)
+
 if __name__ == '__main__':
     suninfo = sun_info()
     print(suninfo.get_sun_info_from_json())
+    test = Curtain()
+    test.open()
+    print(test.get_status())
+    test.close()
+    print(test.get_status())
