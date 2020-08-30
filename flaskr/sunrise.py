@@ -65,7 +65,7 @@ class sun_info:
         sunset_time = str(ephem.localtime(location.next_setting(sun)) - self.adjust_time)
         #計算結果をjsonファイルに書き込む
         self.write_sunrise_info_to_json(sunset_time, sunrise_time, self.status)
-        return 
+        return self.status
     
     #日の出入り時間を計算する（取得）
     def get_sun_info(self):
@@ -91,13 +91,13 @@ class Curtain:
         self.sun_info_json_file = 'suninfo.json'
         self.status = ''
 
-    def set_status_to_json_file(self, status):
+    def set_status_to_json_file(self):
         with open(self.sun_info_json_file, 'r') as json_file:
             json_data = json.load(json_file)
-            json_data['status'] = status
+            json_data['status'] = self.status
         
         with open(self.sun_info_json_file, 'w') as json_file:
-            json_file.write(json.dump(json_data))
+            json.dump(json_data,json_file, indent=4)
 
     def get_status(self):
         with open(self.sun_info_json_file, 'r') as json_file:
@@ -105,11 +105,11 @@ class Curtain:
 
     def open(self):
         self.status = 'open'
-        self.set_status_to_json_file(self.status)
+        self.set_status_to_json_file()
         
     def close(self):
         self.status = 'close'
-        self.set_status_to_json_file(self.status)
+        self.set_status_to_json_file()
 
 if __name__ == '__main__':
     suninfo = sun_info()
