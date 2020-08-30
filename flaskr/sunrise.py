@@ -4,6 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 import ephem
 import json
+from gpiozero import LED
+from time import sleep
 
 class sun_info:
     def __init__(self):
@@ -90,6 +92,10 @@ class Curtain:
     def __init__(self):
         self.sun_info_json_file = 'suninfo.json'
         self.status = ''
+        self.drive1 = LED(20)
+        self.drive2 = LED(16)
+        self.drive1.off()
+        self.drive2.off()
 
     def set_status_to_json_file(self):
         with open(self.sun_info_json_file, 'r') as json_file:
@@ -106,16 +112,26 @@ class Curtain:
     def open(self):
         self.status = 'open'
         self.set_status_to_json_file()
-        
+        sleep(0.1)
+        self.drive1.on()
+        self.drive2.off()
+        sleep(3)
+
     def close(self):
         self.status = 'close'
         self.set_status_to_json_file()
+        sleep(0.1)
+        self.drive1.off()
+        self.drive2.on()
+        sleep(3)
 
 if __name__ == '__main__':
     suninfo = sun_info()
-    print(suninfo.get_sun_info_from_json())
     test = Curtain()
-    test.open()
-    print(test.get_status())
-    test.close()
-    print(test.get_status())
+    
+    while True:
+        print(suninfo.get_sun_info_from_json())
+        test.open()
+        print(test.get_status())
+        test.close()
+        print(test.get_status())
