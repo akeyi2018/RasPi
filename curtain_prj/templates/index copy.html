@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+      <hr>
+    <form action="/setpostcode" method="POST">
+        <p>
+            郵便番号(XXX-XXXX)：<input name="postcode" type="text">
+        </p>
+        <p>
+            <input type="submit" value="設定">
+            <input type="reset" value="取消">
+        </p>
+    </form>  
+    <hr>
+    <p>User Setting Info:</p>
+    <p>郵便番号：{{set_result}}</p>
+    <p>緯度：{{lat}}</p>
+    <p>経度：{{lon}}</p>
+    <p>日の出時間：</p>
+    <p>日の入時間：</p>
+    <p>カーテンの状態：</p>
+    <hr>
+ </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body style="border-left-style: solid;padding-left: 30px;">
+    <hr>
+    <p>ユーザ設定</p>
+      <button onclick="location.href='{{url_for('set_post_code')}}'">郵便番号を設定する</button> 
+      <button onclick="location.href='{{url_for('get_user_info')}}'">ユーザ情報を確認する</button>
+    <hr>
+    <p>手動開閉</p>
+      <button onclick="location.href='{{url_for('open_curtain')}}'">カーテンを開く</button>
+      <button onclick="location.href='{{url_for('close_curtain')}}'">カーテンを閉じる</button>
+      <button onclick="location.href='{{url_for('get_curtain_info')}}'">カーテンの状態を確認する</button>
+    <hr>
+    {% if user %}
+    <p>User Setting Info:</p>
+    <p>郵便番号：{{user.post_code}}</p>
+    <p>緯度：{{user.lat}}</p>
+    <p>経度：{{user.lon}}</p>
+    <p>日の出時間：</p>
+    <p>日の入時間：</p>
+    <hr>
+    {% endif %}
+    {% if status %}
+    <p>Curtain Information:</p>
+    <p>カーテンの状態：{{status}}</p>
+    <hr>
+    {% endif %}
+ </body>
+</html>
